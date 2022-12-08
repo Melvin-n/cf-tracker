@@ -1,0 +1,8 @@
+.weight-tracker__input-form {
+    width: 780px;
+}
+
+.weight-tracker__input-form-container {
+    display: flex;
+    flex-direction: column;
+}

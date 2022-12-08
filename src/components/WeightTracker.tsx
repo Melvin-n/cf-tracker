@@ -1,6 +1,9 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import DatePicker from "react-datepicker";
 import moment from "moment";
+import "./weightTracker.css";
+import { TextField, InputAdornment } from "@mui/material";
 
 type TweightInput = {
   Weight: string;
@@ -11,6 +14,7 @@ export const WeightTracker = (): JSX.Element => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -19,15 +23,32 @@ export const WeightTracker = (): JSX.Element => {
     },
   });
   console.log(errors);
+  const now = Date.now();
+  const [startDate, setStartDate] = useState<Date | null>(new Date(now));
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        console.log(data);
-      })}
-    >
-      <input {...register("Weight", { required: "Weight is required" })} />
-      <input {...register("Date", { required: "Date is required" })} />
-      <input type="submit" />
-    </form>
+    <div className="weight-tracker__input-form-container">
+      <form
+        className="weight-tracker__input-form"
+        onSubmit={handleSubmit((data) => {
+          console.log(data);
+        })}
+      >
+        <input {...register("Weight", {})} />
+        {/* react hook form uses uncontrolled inputs (not dependant on state), to */}
+        {/* use controlled inputs e.g like DatePicker, need to use Controller */}
+        <Controller
+          name="Date"
+          control={control}
+          render={() => (
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+            />
+          )}
+        />
+        {/* <input {...register("Date", { required: "Date is required" })} /> */}
+        <input type="submit" />
+      </form>
+    </div>
   );
 };
