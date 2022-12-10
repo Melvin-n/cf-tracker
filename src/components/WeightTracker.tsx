@@ -16,11 +16,11 @@ export const WeightTracker = (): JSX.Element => {
   const now = moment().format("YYYY-MM-DD");
   console.log(now);
   const [date, setDate] = useState<string>(now);
-  const [weight, setWeight] = useState<number | undefined>();
+  const [weight, setWeight] = useState<number | null>(null);
 
   useEffect(() => {
-    console.log(date);
-  }, [date]);
+    console.log(weight);
+  }, [weight]);
   return (
     <div className="weight-tracker__input-form-container">
       <form className="weight-tracker__input-form">
@@ -30,15 +30,15 @@ export const WeightTracker = (): JSX.Element => {
             aria-label="Weight input"
             aria-describedby="basic-addon2"
             type="number"
-            value={weight}
+            value={weight === null ? "" : weight}
             autoComplete="off"
-            required
+            min="1"
             onChange={(e) => {
               !isNaN(Number(e.target.value)) ? (
-                setWeight(Number(e.target.value))
+                setWeight(e.target.value === "" ? null : Number(e.target.value))
               ) : (
                 <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
+                  Please input a number.
                 </Form.Control.Feedback>
               );
             }}
@@ -59,7 +59,6 @@ export const WeightTracker = (): JSX.Element => {
           }}
           required
         />
-        {/* <input {...register("Date", { required: "Date is required" })} /> */}
         <input type="submit" />
       </form>
     </div>
