@@ -8,32 +8,40 @@ export type TInputField = {
   placeholder?: string;
   ariaLabel?: string;
   type: string;
-  value: any;
   required: boolean;
-  onChange: (e: React.ChangeEvent) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setstate: React.Dispatch<React.SetStateAction<number | null>>
+  ) => void;
 };
 
-const InputValue = (inputfields: TInputField) => {
-  const [weight, setWeight] = useState<number | null>();
+interface InputValueProps {
+  inputfields: TInputField;
+  setState: React.Dispatch<React.SetStateAction<number | null>>;
+  state: number | null;
+}
+
+const InputValue = ({ inputfields, setState, state }: InputValueProps) => {
   return (
-    <form className="weight-tracker__input-form">
-      {inputfields.InputGroupClass && (
-        <InputGroup className="inputfields.InputGroupClass" />
-      )}
-      <Form.Control
-        placeholder={inputfields.placeholder}
-        aria-label="Weight input"
-        type="number"
-        value={weight === null ? "" : weight}
-        required
-        onChange={(e) => {
-          !isNaN(Number(e.target.value))
-            ? setWeight(e.target.value === "" ? null : Number(e.target.value))
-            : "";
-        }}
-      />
-      <InputGroup.Text id="basic-addon2">kg</InputGroup.Text>
-    </form>
+    <div className={inputfields.className}>
+      <InputGroup className={inputfields.InputGroupClass}>
+        <Form.Control
+          placeholder={inputfields.placeholder}
+          aria-label={inputfields.ariaLabel}
+          type={inputfields.type}
+          value={state === null ? "" : state}
+          required
+          onChange={(e) => {
+            !isNaN(Number(e.target.value))
+              ? setState(e.target.value === "" ? null : Number(e.target.value))
+              : "";
+          }}
+        />
+        <InputGroup.Text id="basic-addon2">
+          {inputfields.InputGroupText}
+        </InputGroup.Text>
+      </InputGroup>
+    </div>
   );
 };
 

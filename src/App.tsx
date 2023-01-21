@@ -10,6 +10,7 @@ function App() {
     <div className="App">
       <h2>CF Tracker</h2>
       <WeightTracker />
+      <LFTracker />
     </div>
   );
 }
