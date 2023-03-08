@@ -4,6 +4,7 @@ import LFTracker from "./components/LFTracker";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datepicker/dist/react-datepicker.css";
+import LineGraph from "./components/LineGraph";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <h2>CF Tracker</h2>
       <WeightTracker />
       <LFTracker />
+      <LineGraph />
     </div>
   );
 }
