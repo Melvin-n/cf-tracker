@@ -9,10 +9,16 @@ import LineGraph from "./components/LineGraph";
 function App() {
   return (
     <div className="App">
-      <h2>CF Tracker</h2>
-      <WeightTracker />
-      <LFTracker />
-      <LineGraph />
+      <div className="header-container">
+        <h2>CF Tracker</h2>
+      </div>
+      <div className="input-container">
+        <WeightTracker />
+        <LFTracker />
+      </div>
+      <div className="graph-container">
+        <LineGraph />
+      </div>
     </div>
   );
 }
