@@ -39,15 +39,18 @@ const LineGraph = (): JSX.Element => {
       .scaleLinear()
       .domain([minWeightPoint, maxWeightPoint])
       .range([height, 0]);
-    const generateScaledLine = d3
-      .line<TDateAndWeight>()
-      .x((d) => xScale(d.date))
-      .y((d) => yScale(d.weight));
 
     //set up axes
-    const xAxis = d3.axisBottom(xScale).ticks(dummydata.length);
+    const xAxis = d3
+      .axisBottom(xScale)
+      .tickFormat(
+        d3.timeFormat("%b %d") as (
+          value: Date | { valueOf(): number },
+          i: number
+        ) => string
+      );
     svg.append("g").call(xAxis).attr("transform", `translate(0, ${height})`);
-    const yAxis = d3.axisLeft(yScale).ticks(dummydata.length);
+    const yAxis = d3.axisLeft(yScale);
     svg.append("g").call(yAxis);
 
     svg
